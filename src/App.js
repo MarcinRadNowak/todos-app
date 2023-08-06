@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { BsFillCalendar2PlusFill } from "react-icons/bs";
 import Todo from "./Todo";
 import { db } from "./firebase";
-import { query, collection, onSnapshot } from "firebase/firestore";
+import { query, collection, onSnapshot, updateDoc, doc } from "firebase/firestore";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -19,6 +19,12 @@ useEffect(() => {
   return () => unsubscribe();
 }, [])
 
+const toggleStatus = async (todo) => {
+  await updateDoc(doc(db, "todos", todo.id), {
+    completed: !todo.completed
+  })
+}
+
   return (
     <div className="h-screen w-screen p-4 bg-gradient-to-r from-[#2f58ed] to-[#2f988a]">
       <div className="bg-slate-200 max-w-[600px] w-full m-auto rounded-sm shadow-lg">
@@ -29,7 +35,7 @@ useEffect(() => {
         </form>
         <ul>
           {todos.map((todo, index) => (
-            <Todo key={index} todo={todo} />
+            <Todo key={index} todo={todo} toggleStatus={toggleStatus} />
           ))}
         </ul>
         <p className="text-center p-2">You have ... todos</p>
