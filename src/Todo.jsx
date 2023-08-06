@@ -2,7 +2,7 @@ import React from "react";
 import { VscTrash } from "react-icons/vsc";
 
 const style = {
-  li: "flex justify-between bg-slate-200 p-4 my-2 capitalize",
+  li: "flex justify-between bg-slate-300 p-4 my-2 capitalize m-4",
   completedLi: "flex justify-between bg-slate-400 p-4 my-2 capitalize",
   text: "ml-2 cursor-pointer",
   completedText: "ml-2 cursor-pointer line-through"
