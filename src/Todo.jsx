@@ -1,14 +1,14 @@
-import React from 'react';
-import { VscTrash } from 'react-icons/vsc';
+import React from "react";
+import { VscTrash } from "react-icons/vsc";
 
 const Todo = ({todo}) => {
   return (
-    <li>
-      <div>
+    <li className="flex justify-between bg-slate-400 p-4 my-2 capitalize">
+      <div className="flex">
         <input type="checkbox" />
-        <p>{todo}</p>
+        <p className="ml-2 cursor-pointer">{todo}</p>
       </div>
-      <button>{<VscTrash size={40} />}</button>
+      <button className="cursor-pointer flex items-center">{<VscTrash size={40} />}</button>
     </li>
   )
 }

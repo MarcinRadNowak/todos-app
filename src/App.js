@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { BsFillCalendar2PlusFill } from 'react-icons/bs';
+import { BsFillCalendar2PlusFill } from "react-icons/bs";
 import Todo from "./Todo";
 
 function App() {
