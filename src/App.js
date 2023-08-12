@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { BsFillCalendar2PlusFill } from "react-icons/bs";
 import Todo from "./Todo";
 import { db } from "./firebase";
-import { query, collection, onSnapshot, updateDoc, doc, addDoc } from "firebase/firestore";
+import { query, collection, onSnapshot, updateDoc, doc, addDoc, deleteDoc } from "firebase/firestore";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -18,6 +18,7 @@ const createTodo = async (e) => {
     text: input,
     completed: false
   })
+  setInput("");
 }
 useEffect(() => {
   const q = query(collection(db, "todos"));
@@ -37,6 +38,10 @@ const toggleStatus = async (todo) => {
   })
 }
 
+const deleteTodo = async (id) => {
+  await deleteDoc(doc(db, "todos", id))
+}
+
   return (
     <div className="h-screen w-screen p-4 bg-gradient-to-r from-[#2f58ed] to-[#2f988a]">
       <div className="bg-slate-200 max-w-[500px] w-full m-auto rounded-xl shadow-2xl">
@@ -45,18 +50,19 @@ const toggleStatus = async (todo) => {
           <input 
             value={input} 
             onChange={(e) => setInput(e.target.value)} 
-            className="border p-2 w-full text-lg" 
+            className="border p-2 w-full text-lg mb-2" 
             type="text" 
             placeholder="Add an Todo" 
           />
-          <button className="border p-4 ml-2 bg-gray-100 text-slate-400"><BsFillCalendar2PlusFill size={30} /></button>
+          <button className="border p-4 ml-2 bg-gray-100 text-slate-400 mb-2"><BsFillCalendar2PlusFill size={30} /></button>
         </form>
         <ul>
           {todos.map((todo, index) => (
-            <Todo key={index} todo={todo} toggleStatus={toggleStatus} />
+            <Todo key={index} todo={todo} toggleStatus={toggleStatus} deleteTodo={deleteTodo} />
           ))}
         </ul>
-        <p className="text-center p-2">You have ... todos</p>
+        {todos.length < 1 ? null : <p className="text-center p-2">You have {todos.length} todos</p>}
+        
       </div>
     </div>
   );
